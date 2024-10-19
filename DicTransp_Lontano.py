@@ -87,18 +87,19 @@ def pagina_chat():
         st.session_state['memoria'] = memoria
 
 def sidebar():
-    tabs = st.tabs(['Dicionário do Transporte','Parâmetros'])
+    #tabs = st.tabs(['Dicionário do Transporte','Parâmetros'])
+    tabs = st.tabs(['Dicionário do Transporte'])
     with tabs[0]:
-        sobre = st.header('Criado pela GS Tecnologia da Informação')
+        subtitulo = st.header('Criado pela GS Tecnologia da Informação')
         arquivo = st.file_uploader('Faça o upload do arquivo pdf', type=['.pdf'])
-    with tabs[1]:
+        #with tabs[1]:
         parametros = st.header('Parâmetros de Funcionamento')
-        tipo_arquivo = st.selectbox('Selecione o tipo de arquivo', TIPOS_ARQUIVOS_VALIDOS)
-        provedor = st.selectbox('Selecione um provedor para o chat', CONFIG_MODELOS.keys())
-        modelo = st.selectbox('Selecione o modelo de linguagem', CONFIG_MODELOS[provedor]['modelos'])
+        tipo_arquivo = 'Pdf' #st.selectbox('Selecione o tipo de arquivo', TIPOS_ARQUIVOS_VALIDOS)
+        provedor = 'Groq' #st.selectbox('Selecione um provedor para o chat', CONFIG_MODELOS.keys())
+        modelo = 'llama-3.1-70b-versatile' #st.selectbox('Selecione o modelo de linguagem', CONFIG_MODELOS[provedor]['modelos'])
         #api_key = st.selectbox('Selecione a API KEY da Groq', API_KEY_GROQ)
         api_key = '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'
-        os.environ[API_KEY_GROQ] = api_key
+        os.environ['api_key_Grok'] = api_key
         st.session_state[f'api_key_{provedor}'] = api_key
     
     if st.button('Inicializar Chatbot', use_container_width=True):
