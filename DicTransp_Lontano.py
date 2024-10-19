@@ -6,7 +6,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain_groq import ChatGroq
 from langchain.prompts import ChatPromptTemplate
 
-from loaders import carrega_pdf
+from loaders import *
 
 API_KEY_GROQ = ['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']
 
@@ -96,7 +96,9 @@ def sidebar():
         tipo_arquivo = st.selectbox('Selecione o tipo de arquivo', TIPOS_ARQUIVOS_VALIDOS)
         provedor = st.selectbox('Selecione um provedor para o chat', CONFIG_MODELOS.keys())
         modelo = st.selectbox('Selecione o modelo de linguagem', CONFIG_MODELOS[provedor]['modelos'])
-        api_key = st.selectbox('Selecione a API KEY da Groq', API_KEY_GROQ)
+        #api_key = st.selectbox('Selecione a API KEY da Groq', API_KEY_GROQ)
+        api_key = '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'
+        os.environ[API_KEY_GROQ] = api_key
         st.session_state[f'api_key_{provedor}'] = api_key
     
     if st.button('Inicializar Chatbot', use_container_width=True):
