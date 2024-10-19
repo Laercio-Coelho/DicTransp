@@ -4,7 +4,6 @@ import streamlit as st
 from langchain.memory import ConversationBufferMemory
 
 from langchain_groq import ChatGroq
-from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
 from loaders import carrega_pdf
@@ -88,21 +87,17 @@ def pagina_chat():
         st.session_state['memoria'] = memoria
 
 def sidebar():
-    tabs = st.tabs(['Dicionário do Transporte','Sobre'])
+    tabs = st.tabs(['Dicionário do Transporte','Parâmetros'])
     with tabs[0]:
-        tipo_arquivo = st.selectbox('Selecione o tipo de arquivo', TIPOS_ARQUIVOS_VALIDOS)
-        #arquivo = 'https://1drv.ms/b/s!AqF4kgcwmUGjhph2GCu0mDfjkbrE5w?e=UOCOr1'
-        #arquivo = st.text('C:\GSTI\Lontano\Dicionário do Transporte - LONTANO.pdf')
-        #st.session_state['arquivo'] = arquivo
+        sobre = st.header('Criado pela GS Tecnologia da Informação')
         arquivo = st.file_uploader('Faça o upload do arquivo pdf', type=['.pdf'])
-
+    with tabs[1]:
+        parametros = st.header('Parâmetros de Funcionamento')
+        tipo_arquivo = st.selectbox('Selecione o tipo de arquivo', TIPOS_ARQUIVOS_VALIDOS)
         provedor = st.selectbox('Selecione um provedor para o chat', CONFIG_MODELOS.keys())
         modelo = st.selectbox('Selecione o modelo de linguagem', CONFIG_MODELOS[provedor]['modelos'])
-        #api_key = st.text('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')
         api_key = st.selectbox('Selecione a API KEY da Groq', API_KEY_GROQ)
         st.session_state[f'api_key_{provedor}'] = api_key
-    with tabs[1]:
-        sobre = st.header('Criado pela GS Tecnologia da Informação')
     
     if st.button('Inicializar Chatbot', use_container_width=True):
         carrega_modelo(provedor, modelo, api_key, tipo_arquivo, arquivo)
